@@ -1,0 +1,260 @@
+{% extends 'djzkbBot/site-base.html' %}
+{% load static %}
+
+{% block page_title %} Home {% endblock %}
+
+{% block extra_css %}
+    <style>
+        main {
+            padding-top: 70px;
+        }
+
+        .text-bg-dark-secondary {
+            color: #ffffff;
+            background-color: #3e404b;
+        }
+
+        .card.text-bg-dark-secondary {
+            color: #ffffff;
+            background-color: #464954;
+        }
+
+        section.intro {
+            height: 50vh;
+        }
+
+        section.intro.text-bg-dark {
+            backdrop-filter: blur();
+        }
+        section.intro > #background-video {
+            object-fit: cover;
+            z-index: -1;
+            display: flex;
+            position: absolute;
+            filter: blur(2px) saturate(80%);
+            height: 100%;
+            width: 100%;
+        }
+
+        section.intro > #content_bg {
+            background-color: rgba(187, 187, 187, 0.15);
+            height: 100%;
+        }
+    </style>
+{% endblock %}
+
+{% block body_classes %} text-bg-dark-secondary {% endblock %}
+
+{% block content %}
+    <header class="p-3 text-bg-dark fixed-top shadow-sm">
+        <div class="container">
+          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none me-1">
+                <img src="{% static "djzkbBot/icons/logo.png" %}" width="32" height="32">
+            </a>
+              <span class="fs-3 me-3">{{ SITE_NAME }}</span>
+
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+              <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
+            </ul>
+
+            <div class="text-end">
+              <button type="button" class="btn btn-outline-light me-2">Login</button>
+            </div>
+          </div>
+        </div>
+    </header>
+    <main class="flex-shrink-0">
+        <section class="intro text-bg-dark">
+            <video id="background-video" autoplay loop muted poster="https://colsfiles.nyc3.digitaloceanspaces.com/site_bg.jpg">
+                <source src="https://colsfiles.nyc3.digitaloceanspaces.com/site_bg.mp4" type="video/mp4">
+            </video>
+            <div id="content_bg">
+                <div class="container">
+                    <div class="px-4 py-5 pt-5 text-center">
+                        <img class="d-block mx-auto mb-4" src="{% static 'djzkbBot/icons/logo.png' %}" alt="logo" width="72" height="72">
+                        <h1 class="display-5 fw-bold">zKillBot</h1>
+                        <div class="col-md-6 mx-auto">
+                            <p class="lead mb-4 fw-bold">
+                                zKillBot is a simple and easy to use discord bot to get the kills that matter to you, right in your discord server.
+                            </p>
+                            <div class="justify-content-center">
+                                <button class="btn btn-primary btn-lg gap-3">Add to Discord</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="container intro py-4">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 g-3">
+                <div class="col">
+                    <h3 class="pb-2 border-bottom">Features</h3>
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 rows-cols-lg-4 g-4 py-5">
+                        <div class="col d-flex align-items-start">
+                            <i class="fab fa-bootstrap fa-lg text-muted flex-shrink-0 me-3 pt-2"></i>
+                            <div>
+                                <h3 class="fw-bold mb-0 fs-4">Feature A</h3>
+                                <p>
+                                    Something about the feature
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col d-flex align-items-start">
+                            <i class="fab fa-bootstrap fa-lg text-muted flex-shrink-0 me-3 pt-2"></i>
+                            <div>
+                                <h3 class="fw-bold mb-0 fs-4">Feature B</h3>
+                                <p>
+                                    Something about the feature
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col d-flex align-items-start">
+                            <i class="fab fa-bootstrap fa-lg text-muted flex-shrink-0 me-3 pt-2"></i>
+                            <div>
+                                <h3 class="fw-bold mb-0 fs-4">Feature C</h3>
+                                <p>
+                                    Something about the feature
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col d-flex align-items-start">
+                            <i class="fab fa-bootstrap fa-lg text-muted flex-shrink-0 me-3 pt-2"></i>
+                            <div>
+                                <h3 class="fw-bold mb-0 fs-4">Feature D</h3>
+                                <p>
+                                    Something about the feature
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col d-flex align-items-start">
+                            <i class="fab fa-bootstrap fa-lg text-muted flex-shrink-0 me-3 pt-2"></i>
+                            <div>
+                                <h3 class="fw-bold mb-0 fs-4">Feature E</h3>
+                                <p>
+                                    Something about the feature
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col d-flex align-items-start">
+                            <i class="fab fa-bootstrap fa-lg text-muted flex-shrink-0 me-3 pt-2"></i>
+                            <div>
+                                <h3 class="fw-bold mb-0 fs-4">Feature F</h3>
+                                <p>
+                                    Something about the feature
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <h3 class="pb-2 border-bottom">Stats</h3>
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-3">
+                        <div class="col">
+                            <div class="card text-bg-dark-secondary shadow">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <i class="fab fa-discord fa-3x ms-4 mt-3"></i>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5>10,000</h5>
+                                            <h5 class="card-title fw-bold">Guilds Joined</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card text-bg-dark-secondary shadow">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <i class="fas fa-divide fa-3x ms-4 mt-3"></i>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5>600</h5>
+                                            <h5 class="card-title fw-bold">Avgerage Members</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card text-bg-dark-secondary shadow">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <i class="fas fa-users fa-3x ms-4 mt-3"></i>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5>100,000</h5>
+                                            <h5 class="card-title fw-bold">Total Users</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card text-bg-dark-secondary shadow">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <i class="fas fa-crosshairs fa-3x ms-4 mt-3"></i>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5>100,000</h5>
+                                            <h5 class="card-title fw-bold">Kills Processed</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card text-bg-dark-secondary shadow">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <i class="fas fa-filter fa-3x ms-4 mt-3"></i>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5>100,000</h5>
+                                            <h5 class="card-title fw-bold">Filters Applied</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card text-bg-dark-secondary shadow">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <i class="fas fa-comments fa-3x ms-4 mt-3"></i>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5>100,000</h5>
+                                            <h5 class="card-title fw-bold">Messages Sent</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 container">
+        <div class="col-md-4 d-flex align-items-center">
+          <a href="/" class="mb-3 me-2 mb-md-0 text-white-50 text-decoration-none lh-1">
+              <img src="{% static "djzkbBot/icons/logo.png" %}" width="32" height="32" style="filter: saturate(0%)">
+          </a>
+          <span class="mb-3 mb-md-0 text-white-50">© {% now 'Y' %} Col Crunch</span>
+        </div>
+
+        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+            <li class="ms-3"><a class="text-white-50" href="#"><i class="fab fa-github" width="24" height="24"></i></a></li>
+        </ul>
+  </footer>
+{% endblock %}
