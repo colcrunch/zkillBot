@@ -1,10 +1,4 @@
 // Build CSS for modified Quartz
-
-
-// Set initial values for custom colors...
-// Customization should happen in _variables.scss
-$utility: #000;
-
 @import 'variables';
 @import 'bootstrap/scss/functions';
 @import 'bootstrap/scss/variables';

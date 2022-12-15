@@ -343,3 +343,13 @@ span {
 .offcanvas {
   @include glass();
 }
+
+.sidebar {
+  min-height: 100vh;
+}
+
+.container-scroller {
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
