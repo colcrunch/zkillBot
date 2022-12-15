@@ -19,10 +19,12 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 from .public import urls as publicUrls
+from .authentication import urls as authUrls
 from .bot import urls as botUrls
 
 urlpatterns = [
     path('', include(publicUrls)),
+    path('', include(authUrls)),
     path('bot/', include(botUrls)),
     path('admin/', admin.site.urls),
     re_path(r'^sso/', include('esi.urls', namespace='esi')),
