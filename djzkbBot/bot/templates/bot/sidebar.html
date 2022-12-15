@@ -1,0 +1,33 @@
+{% load static %}
+
+<div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark sidebar" style="width: 280px;">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+      <img src="{% static "djzkbBot/icons/logo.png" %}" width="32" height="32">
+      <span class="fs-4">{{ SITE_NAME }}</span>
+    </a>
+    <ul class="nav nav-pills flex-column mb-auto mt-3">
+      <li>
+        <a href="#" class="nav-link active text-white">
+          <i class="bi bi-speedometer2 pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></i>
+          Dashboard
+        </a>
+      </li>
+    </ul>
+    <ul class="nav nav-pills flex-column">
+      <li>
+        <a href="#" class="nav-link text-white">
+          <i class="bi bi-person-fill-gear pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></i>
+          Admin
+        </a>
+      </li>
+    </ul>
+    <hr>
+    <footer class="d-flex d-flex-wrap justify-content-between px-2">
+        <div class="d-flex align-items-center">
+          <a href="/" class="mb-3 me-2 mb-md-0 text-white-50 text-decoration-none lh-1">
+              <img src="/static/djzkbBot/icons/logo.png" style="filter: saturate(0%)" width="24" height="24">
+          </a>
+          <span class="mb-3 mb-md-0 text-white-50">© 2022 Col Crunch</span>
+        </div>
+    </footer>
+  </div>

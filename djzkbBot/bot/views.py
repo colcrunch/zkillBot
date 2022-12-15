@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 def dashboard(request):
-    return render(request, 'bot/bot_base.html')
+    return render(request, 'bot/dashboard.html')
 
 
 def css_test(request):
