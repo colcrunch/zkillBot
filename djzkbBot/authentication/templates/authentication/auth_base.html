@@ -21,6 +21,16 @@
         </video>
         <div class="d-flex align-items-center h-100">
             <div class="d-flex flex-column align-items-center mx-auto">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.level_tag }} w-100 py-1">
+                        {% if 'danger' in message.level_tag %}
+                            <h4 class="alert-heading">Oh No!</h4>
+                        {% endif %}
+                        <p>{{ message }}</p>
+                    </div>
+                 {% endfor %}
+            {% endif %}
                 <div class="card bg-dark mx-auto" style="min-width: 35rem; max-width: 100rem">
                     <div class="card-body">
                         <h2 class="text-center"><img src="{% static 'djzkbBot/icons/logo.png' %}" width="64" height="64"> {{ SITE_NAME }}</h2>

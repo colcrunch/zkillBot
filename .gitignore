@@ -78,3 +78,4 @@ celerybeat-schedule
 Makefile
 .isort.cfg
 *.env
+*.sqlite3
