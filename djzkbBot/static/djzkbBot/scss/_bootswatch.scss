@@ -168,6 +168,12 @@ span {
   @include glass(.4);
 }
 
+.custom-nav {
+  top: 0;
+  right: 0;
+  left: 280px;
+}
+
 .nav-tabs {
   .nav-link {
     transition: none;
