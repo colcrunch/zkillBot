@@ -140,7 +140,7 @@ MESSAGE_TAGS = {
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1" # change the 1 here to change the database used
+        "LOCATION": "redis://127.0.0.1:6379/1"  # change the 1 here to change the database used
     }
 }
 
@@ -168,7 +168,8 @@ LOGOUT_REDIRECT_URL = 'public:home'  # destination after logging out
 # - absolute urls eg 'http://example.com/dashboard'
 
 # scopes required on new tokens when logging in. Cannot be blank.
-LOGIN_TOKEN_SCOPES = ['publicData']
+ESI_LOGIN_TOKEN_SCOPES = ['publicData']
+DISCORD_LOGIN_TOKEN_SCOPES = ['identify', 'email', 'guilds']
 
 ESI_API_URL = 'https://esi.evetech.net/'
 
