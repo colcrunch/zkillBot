@@ -1,8 +1,9 @@
+import os
 from celery import Celery
 from celery.app import trace
 
 # set the default Django settings module for the 'celery' program.
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', '{{ project_name }}.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', '{{ project_name }}.settings.local')
 
 
 from django.conf import settings  # noqa
