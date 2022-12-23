@@ -22,10 +22,7 @@ app.conf.broker_transport_options = {
 app.conf.task_default_priority = 5  # anything called with the task.delay() will be given normal priority (5)
 app.conf.worker_prefetch_multiplier = 1  # only prefetch single tasks at a time on the workers so that prio tasks happen
 
-app.conf.ONCE = {
-    'backend': 'allianceauth.services.tasks.DjangoBackend',
-    'settings': {}
-}
+app.conf.ONCE = {}
 
 # Load task modules from all registered Django app configs.
 app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
