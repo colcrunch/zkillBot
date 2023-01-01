@@ -21,7 +21,7 @@ def callback(request):
         'client_secret': settings.DISCORD_APP_SECRET,
         'grant_type': 'authorization_code',
         'code': code,
-        'redirect_uri': 'http://bot.local/discord/callback/',
+        'redirect_uri': settings.DISCORD_CALLBACK_URL,
     }
     headers = {
         'Content-Type': 'application/x-www-form-urlencoded'
