@@ -116,6 +116,6 @@ class TokenManager(models.Manager):
     def get_queryset(self):
         """
         Replace the base queryset model with the custom TokenQueryset model.
-        :rtype: :ckass:`djzkbBot.authentication.discord_auth.models.Token`
+        :rtype: :class:`djzkbBot.authentication.discord_auth.models.Token`
         """
         return TokenQuerySet(self.model, using=self._db)
