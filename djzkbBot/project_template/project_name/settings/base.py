@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'esi',
     'djzkbBot.authentication',
+    'djzkbBot.authentication.discord_auth',
     'djzkbBot.public',
     'djzkbBot.bot',
 ]
@@ -221,3 +222,6 @@ SASS_COMPILER_NO_BUILD = True
 SASS_COMPILER_CLEAN = True
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+DISCORD_TOKEN_URL = "https://discord.com/api/oauth2/token"
+DISCORD_API_BASE = "https://discord.com/api"
+DISCORD_ALWAYS_CREATE_TOKEN = False
