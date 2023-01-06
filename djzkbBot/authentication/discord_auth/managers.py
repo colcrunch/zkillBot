@@ -1,4 +1,5 @@
 from logging import getLogger
+from datetime import timedelta
 from typing import Union
 
 import requests
@@ -8,7 +9,7 @@ from django.db import models
 from django.utils import timezone
 from django.conf import settings
 
-from .errors import TokenError, IncompleteResponseError
+from .errors import TokenError, IncompleteResponseError, TokenInvalidError
 
 
 logger = getLogger(__name__)
@@ -111,6 +112,18 @@ class TokenQuerySet(models.QuerySet):
         pks = [v['pk'] for v in scopes_qs]
         return self.filter(pk__in=pks)
 
+    def equivalent_to(self, token):
+        """
+        Fetch all tokens that match the discord user and scopes of the given reference token.
+
+        Args
+            token: the reference token
+        """
+        return self\
+            .filter(discord_user_id=token.discord_user_id)\
+            .require_scopes(token.scopes.all()).filter(models.Q(user=token.user) | models.Q(user__isnull=True))\
+            .exclude(pk=token.pk)
+
 
 class TokenManager(models.Manager):
     def get_queryset(self):
@@ -119,3 +132,104 @@ class TokenManager(models.Manager):
         :rtype: :class:`djzkbBot.authentication.discord_auth.models.Token`
         """
         return TokenQuerySet(self.model, using=self._db)
+
+    def __get_discord_user_id(self, token) -> str:
+        """
+        Gets the discord ID for the user that the token was issued to.
+
+        :param token: a Discord Token
+
+        :return: string representation of the discord userid
+        """
+        headers = {
+            'Authorization': f"Bearer {token.get('access_token', None)}"
+        }
+        request_url = settings.DISCORD_API_BASE + "/users/@me"
+
+        r = requests.get(request_url, headers=headers)
+        r.raise_for_status()
+
+        response = r.json()
+
+        return response.get("id")
+
+    def create_from_code(self, code, user=None):
+        """
+        Perform OAuth code exchange to retrieve a token.
+
+        :param code: OAuth grant code.
+        :param user: User who will oen the token.
+        :rethrn: Token
+        """
+
+        logger.debug(f"Creating new token from {code}")
+        oauth = OAuth2Session(
+            settings.DISCORD_APP_ID,
+            redirect_uri=settings.DISCORD_CALLBACK_URL
+        )
+        token = oauth.fetch_token(
+            settings.DISCORD_TOKEN_URL,
+            client_secret=settings.DISCORD_APP_SECRET,
+            code=code
+        )
+
+        if token.get('access_token', None) is None:
+            raise TokenInvalidError
+
+        discord_id = self.__get_discord_user_id(token)
+        duration = timedelta(seconds=token.get('expires_in', 604800))
+
+        model = self.create(
+            discord_user_id=discord_id,
+            ttl=duration,
+            access_token=token.get('access_token'),
+            refresh_token=token.get('refresh_token'),
+            user=user
+        )
+
+        if 'scope' in token:
+            from .models import Scope
+
+            if isinstance(token.get('scope'), str):
+                token['scope'] = [token['scope']]
+
+            for s in token.get('scope'):
+                try:
+                    scope = Scope.objects.get(name=s)
+                    model.scopes.add(scope)
+                except Scope.DoesNotExist:
+                    # This scope was not created when the migration ran
+                    # Create a placeholder model.
+                    try:
+                        help_text = s.split('.')[1].replace('_', ' ').capitalize()
+                    except IndexError:
+                        # Unusual scope name, missing periods.
+                        help_text = s.replace('_', ' ').capitalize()
+                    scope = Scope.objects.create(name=s, help_text=help_text)
+                    model.scopes.add(scope)
+            logger.debug(f"Added {model.scopes.all().count()} to new token.")
+
+        if not settings.DISCORD_ALWAYS_CREATE_TOKEN:
+            # see if we already have a token for this combination of discord user and scope combo.
+            # if we have a matching token already we dont need this one.
+            qs = self.get_queryset().equivalent_to(model)
+            if qs.exists():
+                logger.debug(
+                    f"Identified {qs.count()} tokens equivalent to the new toke. "
+                    f"Updating access and refresh tokens."
+                    )
+                qs.update(
+                    access_token=model.access_token,
+                    refresh_token=model.refresh_token,
+                    created=model.created
+                )
+                if qs.filter(user=model.user).exists():
+                    logger.debug(
+                        "Equivalent token with the same user exists, deleting new token."
+                    )
+                    model.delete()
+                    model = qs.filter(user=model.user)[0]
+
+        logger.debug(f"Successfully created {model} for user {user or None}")
+        return model
+
