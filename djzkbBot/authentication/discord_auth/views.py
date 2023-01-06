@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.conf import settings
-import requests
+
+from .models import Token
 
 from logging import getLogger
 
@@ -16,22 +17,9 @@ def login(request, token):
 def callback(request):
     code = request.GET.get('code')
 
-    data = {
-        'client_id': settings.DISCORD_APP_ID,
-        'client_secret': settings.DISCORD_APP_SECRET,
-        'grant_type': 'authorization_code',
-        'code': code,
-        'redirect_uri': settings.DISCORD_CALLBACK_URL,
-    }
-    headers = {
-        'Content-Type': 'application/x-www-form-urlencoded'
-    }
-    r = requests.post('https://discord.com/api/oauth2/token', data=data, headers=headers)
-    r.raise_for_status()
+    token = Token.objects.create_from_code(code)
 
-    t = r.json()
-
-    return HttpResponse(str(t))
+    return HttpResponse(str(token.__dict__))
 
 
 def revoke_token(request):
