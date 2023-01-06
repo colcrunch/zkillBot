@@ -87,7 +87,7 @@ class Token(models.Model):
     objects = TokenManager()
 
     def __str__(self):
-        return f'{self.user.username} - {", ".join(s.name for s in self.scopes.all())}'
+        return f'{self.discord_user_id} - {", ".join(s.name for s in self.scopes.all())}'
 
     def __repr__(self):
         return f'<{self.__class__.__name__}(id={self.pk}): {self.user.username}>'
