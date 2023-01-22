@@ -1,4 +1,5 @@
 import datetime
+import requests
 from logging import getLogger
 
 from requests.auth import HTTPBasicAuth
@@ -189,6 +190,41 @@ class Token(models.Model):
             raise ImproperlyConfigured(
                 "Verify that DISCORD_APP_ID and DISCORD_APP_SECRET settings in local.py"
             )
+
+    def get_full_username(self):
+        """
+        Retrieves the full username (username and discriminator) from the Discord API.
+        """
+        headers = {
+            'Authorization': f"Bearer {self.access_token}"
+        }
+        request_url = settings.DISCORD_API_BASE + "/users/@me"
+
+        r = requests.get(request_url, headers=headers)
+        r.raise_for_status()
+
+        response = r.json()
+
+        username = response.get("username")
+        discriminator = response.get("discriminator")
+
+        return f"{username}#{discriminator}"
+
+    def get_email(self):
+        """
+        Gets the email from the discord API.
+        """
+        headers = {
+            'Authorization': f"Bearer {self.access_token}"
+        }
+        request_url = settings.DISCORD_API_BASE + "/users/@me"
+
+        r = requests.get(request_url, headers=headers)
+        r.raise_for_status()
+
+        response = r.json()
+
+        return response.get("email", None)
 
     class Meta:
         default_permissions = (())
