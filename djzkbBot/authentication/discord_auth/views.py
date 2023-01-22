@@ -16,7 +16,7 @@ logger = getLogger(__name__)
 
 
 # Create your views here.
-@discord_token_required(scopes=settings.DISCORD_LOGIN_SCOPES)
+@discord_token_required(scopes=settings.DISCORD_LOGIN_TOKEN_SCOPES)
 def login(request, token):
     user = authenticate(token=token)
     if user:
