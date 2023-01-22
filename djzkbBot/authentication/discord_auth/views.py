@@ -25,9 +25,12 @@ def login(request, token):
             token.delete()
         else:
             token.save()
-
-        login(request, user)
-        return redirect(request.POST.get('next', request.GET.get('next', settings.LOGIN_REDIRECT_URL)))
+        if user.is_active:
+            login(request, user)
+            return redirect(request.POST.get('next', request.GET.get('next', settings.LOGIN_REDIRECT_URL)))
+        else:
+            messages.error(request, "User account is currently disabled. Please contact an administrator")
+            return redirect(settings.LOGIN_URL)
     messages.error(request, "Unable to authenticate using the selected token.")
     return redirect(settings.LOGIN_URL)
 
