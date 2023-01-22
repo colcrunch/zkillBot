@@ -15,10 +15,10 @@ def _check_callback(request):
         model = DiscordCallbackRedirect.objects.get(session_key=request.session.session_key)
         token = Token.objects.get(pk=model.token.pk)
         model.delete()
-        logger.debug(f"Retrieved new token from callback for {request.user} session {request.session.session_key [:5]}")
+        logger.debug(f"Retrieved new token from callback for {request.user} session {request.session.session_key[:5]}")
         return token
     except:
-        logger.debug(f"No callback for {request.user} session {request.session.session_key [:5]}", exc_info=True)
+        logger.debug(f"No callback for {request.user} session {request.session.session_key[:5]}", exc_info=True)
         return None
 
 
@@ -44,6 +44,7 @@ def discord_token_required(scopes='', new=False):
             logger.debug("Redirecting {request.user} session {request.session.session_key [:5]} to SSO.")
             from .views import sso_redirect
             return sso_redirect(request, scopes=scopes)
-        return
+
+        return _wrapped_view
 
     return decorator
