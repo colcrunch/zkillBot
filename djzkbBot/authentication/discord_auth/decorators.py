@@ -2,7 +2,6 @@ from logging import getLogger
 from functools import wraps
 
 from .models import Token, DiscordCallbackRedirect
-from .views import sso_redirect
 
 logger = getLogger(__name__)
 
@@ -43,6 +42,7 @@ def discord_token_required(scopes='', new=False):
 
             # otherwise send user to SSO to add a new token
             logger.debug("Redirecting {request.user} session {request.session.session_key [:5]} to SSO.")
+            from .views import sso_redirect
             return sso_redirect(request, scopes=scopes)
         return
 
