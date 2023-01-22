@@ -222,6 +222,8 @@ SASS_COMPILER_NO_BUILD = True
 SASS_COMPILER_CLEAN = True
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
-DISCORD_TOKEN_URL = "https://discord.com/api/oauth2/token"
 DISCORD_API_BASE = "https://discord.com/api"
+DISCORD_OAUTH_BASE = f"{DISCORD_API_BASE}/oauth2"
+DISCORD_TOKEN_URL = f"{DISCORD_OAUTH_BASE}/token"
+DISCORD_OAUTH_LOGIN_URL = f"{DISCORD_OAUTH_BASE}/authorize"
 DISCORD_ALWAYS_CREATE_TOKEN = False
