@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_celery_beat',
     'esi',
     'djzkbBot.authentication',
     'djzkbBot.authentication.discord_auth',
