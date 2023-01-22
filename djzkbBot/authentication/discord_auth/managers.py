@@ -233,3 +233,16 @@ class TokenManager(models.Manager):
         logger.debug(f"Successfully created {model} for user {user or None}")
         return model
 
+    def create_from_request(self, request):
+        """
+        Generate a token from the OAuth Callback request. Must contain 'code' in GET params.
+        :param request: OAuth callback request.
+        :return: Token
+        """
+        logger.debug(f"Creating new token for {request.user} session {request.session.session_key[:5]}")
+        code = request.GET.get('code')
+
+        model = self.create_from_code(
+            code, user=request.user if request.user.is_authenticated else None
+        )
+        return model
