@@ -12,12 +12,13 @@ def _check_callback(request):
         request.session.create()
 
     try:
+        logger.debug(f"Full key (CHECK: {request.session.session_key}")
         model = DiscordCallbackRedirect.objects.get(session_key=request.session.session_key)
         token = Token.objects.get(pk=model.token.pk)
         model.delete()
         logger.debug(f"Retrieved new token from callback for {request.user} session {request.session.session_key[:5]}")
         return token
-    except:
+    except (DiscordCallbackRedirect.DoesNotExist, Token.DoesNotExist, AttributeError):
         logger.debug(f"No callback for {request.user} session {request.session.session_key[:5]}", exc_info=True)
         return None
 
@@ -37,11 +38,11 @@ def discord_token_required(scopes='', new=False):
             # Check if we are coming back from SSO with a token.
             token = _check_callback(request)
             if token:
-                logger.debug("Got new token from {request.user} session {request.session.session_key [:5]}. Returning.")
+                logger.debug(f"Got new token from {request.user} session {request.session.session_key[:5]}. Returning.")
                 return view_func(request, token, *args, **kwargs)
 
             # otherwise send user to SSO to add a new token
-            logger.debug("Redirecting {request.user} session {request.session.session_key [:5]} to SSO.")
+            logger.debug(f"Redirecting {request.user} session {request.session.session_key [:5]} to SSO.")
             from .views import sso_redirect
             return sso_redirect(request, scopes=scopes)
 

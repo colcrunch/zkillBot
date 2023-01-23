@@ -1,7 +1,7 @@
 from requests_oauthlib import OAuth2Session
 
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.conf import settings
@@ -17,7 +17,7 @@ logger = getLogger(__name__)
 
 # Create your views here.
 @discord_token_required(scopes=settings.DISCORD_LOGIN_TOKEN_SCOPES)
-def login(request, token):
+def discord_login(request, token):
     user = authenticate(token=token)
     if user:
         token.user = user
@@ -88,6 +88,7 @@ def sso_redirect(request, scopes=None, return_to=None):
     if not request.session.exists(request.session.session_key):
         logger.debug("Creating new session.")
         request.session.create()
+        logger.debug(f"FULL KEY (CREATE): {request.session.session_key}")
 
     if return_to:
         url = reverse(return_to)
@@ -101,11 +102,13 @@ def sso_redirect(request, scopes=None, return_to=None):
     )
     redirect_url, state = oauth.authorization_url(settings.DISCORD_OAUTH_LOGIN_URL)
 
-    DiscordCallbackRedirect.objects.create(
+    logger.debug(f"Creating Discord Callback for {request.user} session {request.session.session_key[:5]}")
+    d = DiscordCallbackRedirect.objects.create(
         session_key=request.session.session_key,
         state=state,
         url=url
     )
+    logger.debug(f"Discord Callback created with ID: {d.pk}")
     return redirect(redirect_url)
 
 
