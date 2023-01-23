@@ -47,7 +47,7 @@ class TokenQuerySet(models.QuerySet):
             settings.DISCORD_APP_SECRET
         )
         incomplete = []
-        for model in self.filter(refresh_token__is_null=False):
+        for model in self.filter(refresh_token__isnull=False):
             try:
                 model.refresh(session=session, auth=auth)
                 logger.debug(f"Successfully refreshed {model}")
@@ -55,6 +55,8 @@ class TokenQuerySet(models.QuerySet):
                 logger.info(f'Refresh failed for {model}. Deleting.')
             except IncompleteResponseError:
                 incomplete.append(model.pk)
+        self.filter(refresh_token__isnull=True).get_expired().delete()
+        return self.exclude(pk__in=incomplete)
 
     def require_valid(self) -> models.QuerySet:
         """

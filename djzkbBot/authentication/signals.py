@@ -13,6 +13,7 @@ logger = logging.getLogger(__name__)
 @receiver(post_save, sender=User)
 def create_required_models(sender, instance, created, *args, **kwargs):
     # ensure a userprofile is always created
+    logger.critical("IT HAPPENED")
     if created:
         logger.debug(f"User {instance} created. Creating default UserProfile.")
         UserProfile.objects.get_or_create(user=instance)

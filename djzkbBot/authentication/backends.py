@@ -27,7 +27,7 @@ class DiscordBackend(ModelBackend):
         username = self.iterate_username(token.get_full_username())
         email = token.get_email()
         user = User.objects.create_user(username, email=email, is_active=True)
-        user.set_unusuable_password()
+        user.set_unusable_password()
         user.save()
         token.user = user
         user.profile.discord_user_id = token.discord_user_id
@@ -37,7 +37,7 @@ class DiscordBackend(ModelBackend):
 
     @staticmethod
     def iterate_username(name):
-        if User.objects.filter(username__startswit=name).exists():
+        if User.objects.filter(username__startswith=name).exists():
             u = User.objects.filter(username__startswith=name)
             num = len(u)
             username = f"{name}_{num}"

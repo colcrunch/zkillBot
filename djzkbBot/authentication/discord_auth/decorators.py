@@ -7,7 +7,7 @@ logger = getLogger(__name__)
 
 
 def _check_callback(request):
-    if not request.session_exists(request.session.session_key):
+    if not request.session.exists(request.session.session_key):
         logger.debug(f"Creating session for {request.user}")
         request.session.create()
 

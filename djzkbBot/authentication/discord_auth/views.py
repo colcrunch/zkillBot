@@ -97,7 +97,7 @@ def sso_redirect(request, scopes=None, return_to=None):
     oauth = OAuth2Session(
         settings.DISCORD_APP_ID,
         redirect_uri=settings.DISCORD_CALLBACK_URL,
-        scopes=scopes
+        scope=scopes
     )
     redirect_url, state = oauth.authorization_url(settings.DISCORD_OAUTH_LOGIN_URL)
 
