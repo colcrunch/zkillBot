@@ -110,6 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTHENTICATION_BACKENDS = [
+    'djzkbBot.authentication.backends.DiscordBackend',
     'django.contrib.auth.backends.ModelBackend'
 ]
 
