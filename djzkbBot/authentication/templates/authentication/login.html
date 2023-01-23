@@ -19,7 +19,7 @@
         </div>
         <div class="mt-3 d-grid justify-content-center">
             <button class="btn btn-primary" type="submit">Log In</button>
-            <a class="btn btn-icon-split mt-1" style="background: #686dc3" type="button" href="{{ DISCORD_LOGIN_URL }}">
+            <a class="btn btn-icon-split mt-1" style="background: #686dc3" type="button" href="{% url 'authentication:discord_auth:discord_login' %}">
                 <span class="icon"><i class="fab fa-discord"></i></span>
                 <span class="text">Log in with Discord</span>
             </a>
