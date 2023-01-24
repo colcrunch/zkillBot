@@ -31,6 +31,7 @@ class DiscordBackend(ModelBackend):
         user.save()
         token.user = user
         user.profile.discord_user_id = token.discord_user_id
+        user.profile.discord_avatar_hash = token.get_avatar()
         user.profile.save()
         logger.debug(f"Created user {user}")
         return user

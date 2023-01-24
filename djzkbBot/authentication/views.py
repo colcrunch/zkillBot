@@ -15,13 +15,10 @@ def login(request):
         form = AuthenticationForm(request=request, data=request.POST)
         logger.debug(form.is_valid())
         if form.is_valid():
-            logger.debug("DD")
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
 
-            logger.debug("CC")
             user = authenticate(username=username, password=password)
-            logger.debug("BB")
             logger.debug(user)
             if user is not None:
                 login_user(request, user)

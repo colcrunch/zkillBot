@@ -226,6 +226,22 @@ class Token(models.Model):
 
         return response.get("email", None)
 
+    def get_avatar(self):
+        """
+                Gets the email from the discord API.
+                """
+        headers = {
+            'Authorization': f"Bearer {self.access_token}"
+        }
+        request_url = settings.DISCORD_API_BASE + "/users/@me"
+
+        r = requests.get(request_url, headers=headers)
+        r.raise_for_status()
+
+        response = r.json()
+
+        return response.get("avatar", None)
+
     class Meta:
         default_permissions = (())
 

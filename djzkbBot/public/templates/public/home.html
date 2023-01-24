@@ -83,7 +83,7 @@
                                 zKillBot is a simple and easy to use discord bot to get the kills that matter to you, right in your discord server.
                             </p>
                             <div class="justify-content-center">
-                                <a class="btn btn-primary btn-lg gap-3" href="{% url 'authentication:login' %}">Add to Discord</a>
+                                <a class="btn btn-primary btn-lg gap-3" href="{% if not request.user.is_authenticated %}{% url 'authentication:login' %}{% else %}{% url 'bot:dashboard' %}{% endif %}">Add to Discord</a>
                             </div>
                         </div>
                     </div>
