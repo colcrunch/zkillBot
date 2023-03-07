@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'esi',
     'djzkbBot.authentication',
+    'djzkbBot.thirdparty.navactive',
     'djzkbBot.authentication.discord_auth',
     'djzkbBot.public',
     'djzkbBot.bot',
