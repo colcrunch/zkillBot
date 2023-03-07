@@ -1,4 +1,5 @@
 {% load static %}
+{% load navactive %}
 
 <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark sidebar shadow position-fixed" style="width: 280px;">
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -7,7 +8,7 @@
     </a>
     <ul class="nav nav-pills flex-column mb-auto mt-3">
       <li>
-        <a href="#" class="nav-link active text-white">
+        <a href="{% url 'bot:dashboard' %}" class="nav-link {% navactive request 'bot:dashboard' %} text-white">
           <i class="bi bi-speedometer2 pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></i>
           Dashboard
         </a>
@@ -15,7 +16,7 @@
     </ul>
     <ul class="nav nav-pills flex-column">
       <li>
-        <a href="#" class="nav-link text-white">
+        <a href="{% url 'bot:admin' %}" class="nav-link {% navactive request 'bot:admin' %} text-white">
           <i class="bi bi-person-fill-gear pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></i>
           Admin
         </a>
